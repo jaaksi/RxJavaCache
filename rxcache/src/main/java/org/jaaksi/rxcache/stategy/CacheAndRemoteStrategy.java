@@ -17,7 +17,7 @@ import rx.functions.Func1;
  * 如果缓存成功，网络请求数据无效，则网络不回调<br/>
  * 如果缓存成功，网络也成功，且网络和缓存数据相同则只有缓存回调，网络不再二次回调，否则会二次回调<br/>
  */
-public final class CacheAndRemoteStrategy extends BaseStrategy {
+public class CacheAndRemoteStrategy extends BaseStrategy {
     private final Gson gson = new Gson();
 
     @Override
@@ -52,8 +52,12 @@ public final class CacheAndRemoteStrategy extends BaseStrategy {
                     return null;
                 }
 
-                return gson.toJson(result.data).hashCode() + "";
+                return toJson(result.data);
             }
         });
     }
+
+   protected String toJson(Object object){
+       return gson.toJson(object).hashCode() + "";
+   }
 }
